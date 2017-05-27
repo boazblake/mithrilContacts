@@ -1,0 +1,15 @@
+{
+  "name": "mithrilContacts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts":{
+    "start": "webpack src/index.js bin/app.js -d --watch",
+    "build": "webpack -p",
+    "heroku-postbuild": "webpack -p"
+  },
+  "dependencies": {
+    "mithril": "^1.1.1",
+    "webpack": "^2.6.1"
+  }
+}
