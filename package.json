@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts":{
+  "scripts": {
     "start": "webpack src/index.js bin/app.js -d --watch",
     "build": "webpack -p",
     "heroku-postbuild": "webpack -p"
   },
   "dependencies": {
+    "blaze": "^3.2.2",
+    "classnames": "^2.2.5",
+    "firebase": "^4.0.0",
     "mithril": "^1.1.1",
+    "normalize.css": "^7.0.0",
     "webpack": "^2.6.1"
   }
 }

@@ -1,12 +1,15 @@
 var m = require("mithril")
 
-module.exports = {
+const Layout = {
     view: function(vnode) {
         return m("main.layout", [
-            m("nav.menu", [
-                m("a[href='/list']", {oncreate: m.route.link}, "Users")
+            m("nav.menu ", {class:'c-nav c-nav--inline c-nav--light'},[
+                m("a[href='/list']", {oncreate: m.route.link, class:'c-nav__item'}, "CONTACTS")
             ]),
             m("section", vnode.children)
         ])
     }
 }
+
+
+module.exports = Layout

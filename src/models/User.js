@@ -1,27 +1,21 @@
 const m = require('mithril')
+var UserRef = id=> firebase.database().ref(`users/${id}`);
 
 var User = {
-  current: {},
+  current: [],
+  errors:{},
 
-  load: function(id) {
-    return m.request({
-      method: "GET",
-      url: "https://rem-rest-api.herokuapp.com/api/users/:id",
-      data: {id: id},
-      withCredentials: true,
-    })
-    .then(function(result) {
-      User.current = result
+  load: id => {
+    UserRef(id-1).on("value", snapshot =>{
+      User.current = snapshot.val()
+      m.redraw()
     })
   },
 
-  save: function(id) {
-    return m.request({
-        method: "PUT",
-        url: "https://rem-rest-api.herokuapp.com/api/users/:id",
-        data: User.current,
-        withCredentials: true,
-    })
+  save: _ =>  {
+    UserRef(User.current.id).set({ firstNamename: User.current.firstName
+                , lastName:User.current.lastName
+                })
   }
 }
 

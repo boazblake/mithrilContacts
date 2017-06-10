@@ -1,13 +1,16 @@
 const m = require('mithril')
 const Users = require('../models/Users.js')
 
-module.exports = {
+const UserList = {
   oninit:Users.loadList,
-  view: function() {
-    return m(".user-list", Users.list.map( function(user) {
-      return m("a.user-list-item"
-              , {href: "/edit/" + user.id, oncreate:m.route.link}
-              , user.firstName + " " + user.lastName)
-    }))
+  view: _ =>{
+    return Users.list.length > 0 ? m(".user-list", Users.list.map( user =>
+      m("a.user-list-item"
+              , {oncreate:m.route.link, href: `/edit/${user.id}`}
+              , user.firstName + " " + user.lastName , m("img", {src:user.profilePic}))
+    )) : "LOADING"
   }
 }
+
+
+module.exports = UserList

@@ -2,13 +2,13 @@ const m = require('mithril')
 const User = require('../models/User.js');
 
 
-module.exports = {
+const UserForm = {
   oninit: vnode => User.load(vnode.attrs.id),
   view: function() {
-        return m("form", {
+        return User.current? m("form", {
                 onsubmit: function(e) {
-                    e.preventDefault()
-                    User.save()
+                  e.preventDefault()
+                  User.save()
                 }
             }, [
             m("label.label", "First name"),
@@ -21,7 +21,9 @@ module.exports = {
                 oninput: m.withAttr("value", function(value) {User.current.lastName = value}),
                 value: User.current.lastName
             }),
-            m("button.button[type=submit]", "Save"),
-        ])
+            m("button.button[type=submit]",{class: "c-button button-brand"},"Save"),
+        ])  : "LOADING"
     }
 }
+
+module.exports = UserForm
