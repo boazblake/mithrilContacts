@@ -1,21 +1,29 @@
 const m = require('mithril')
+const R = require('ramda')
 var UserRef = id=> firebase.database().ref(`users/${id}`);
 
 var User = {
-  current: [],
+  current: {},
   errors:{},
+  updatedUserObject:{},
 
   load: id => {
-    UserRef(id-1).on("value", snapshot =>{
+    UserRef(id).on("value", snapshot =>{
       User.current = snapshot.val()
+      console.log('user.current',User.current)
+      User.updatedUserObject = R.clone(User.current)
+      console.log('updateduser',User.updatedUserObject)
       m.redraw()
     })
   },
 
   save: _ =>  {
-    UserRef(User.current.id).set({ firstNamename: User.current.firstName
-                , lastName:User.current.lastName
-                })
+  console.log('save',User.updatedUserObject)
+    UserRef(User.current.id).update(
+      { firstName:  User.updatedUserObject.firstName
+      , lastName:   User.updatedUserObject.lastName
+      , profilePic: User.updatedUserObject.profilePic
+      })
   }
 }
 
