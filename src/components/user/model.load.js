@@ -6,7 +6,7 @@ var UserRef = id => firebase.database().ref(`users/${id}`);
 
 const getUser = id => {
   UserRef(id).on("value", snapshot =>{
-    data = snapshot.val()
+    console.log(snapshot.val())
     console.log('data',data)
     return folktale.data.Task.of(data)
   })
