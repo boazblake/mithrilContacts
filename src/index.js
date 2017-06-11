@@ -1,6 +1,6 @@
 var m = require("mithril")
 
-var UserList = require("./views/UserList")
+var UserList = require("./components/users/view.js")
 var UserForm = require("./views/UserForm")
 var Layout = require("./views/Layout")
 

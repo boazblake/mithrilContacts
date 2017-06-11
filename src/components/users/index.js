@@ -6,6 +6,7 @@ var Users = {
     loadList: _ => {
       UserRef.on("value", snapshot =>{
         Users.list = snapshot.val()
+        console.log('hi')
         m.redraw()
       })
     }
