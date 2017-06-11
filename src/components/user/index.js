@@ -1,6 +1,6 @@
 const m = require('mithril')
 const R = require('ramda')
-const getUser = require('./model.load.js');
+const loader = require('./model.load.js');
 
 
 var User = {
@@ -12,7 +12,7 @@ var User = {
     const onError =x => console.log('E',x)
     const onSuccess = x => console.log('s',x)
 
-    getUser(id).fork(onError, onSuccess)
+    loader(id).fork(onError, onSuccess)
   },
 
 

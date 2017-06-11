@@ -1,15 +1,21 @@
 const m = require('mithril')
 const R = require('ramda')
-const folktale = require('folktale');
+const { task, of } = require('folktale/data/task');
+const UserRef = id => firebase.database().ref(`users/${id}`)
+const log = x => {
+  console.log('x',x)
+  return x
+}
 
-var UserRef = id => firebase.database().ref(`users/${id}`);
-
-const getUser = id => {
+const getUser = id =>{
+  console.log(id )
   UserRef(id).on("value", snapshot =>{
     console.log(snapshot.val())
-    console.log('data',data)
-    return folktale.data.Task.of(data)
   })
 }
 
-module.exports = getUser
+const loader =
+  R.compose(log,getUser)
+
+
+module.exports = loader
