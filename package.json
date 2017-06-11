@@ -13,6 +13,7 @@
     "classnames": "^2.2.5",
     "eslint-config-standard": "^10.2.1",
     "firebase": "^4.0.0",
+    "folktale": "^2.0.0-beta1",
     "mithril": "^1.1.1",
     "normalize.css": "^7.0.0",
     "ramda": "^0.24.1",
