@@ -4,10 +4,12 @@ const folktale = require('folktale');
 
 var UserRef = id => firebase.database().ref(`users/${id}`);
 
-export const load = id => {
+const getUser = id => {
   UserRef(id).on("value", snapshot =>{
     data = snapshot.val()
     console.log('data',data)
     return folktale.data.Task.of(data)
   })
 }
+
+module.exports = getUser

@@ -1,7 +1,7 @@
 var m = require("mithril")
 
 var UserList = require("./components/users/view.js")
-var UserForm = require("./views/UserForm")
+var UserForm = require("./components/user/view.js")
 var Layout = require("./views/Layout")
 
 m.route(document.body, "/list", {
