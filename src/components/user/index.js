@@ -1,18 +1,22 @@
 const m = require('mithril')
 const R = require('ramda')
-const loader = require('./model.load.js');
+const UserRef = id => firebase.database().ref(`users/${id}`)
 
 
-var User = {
+const User = {
   current: {},
   errors:{},
   updatedUserObject:{},
 
   load:id => {
     const onError =x => console.log('E',x)
-    const onSuccess = x => console.log('s',x)
+    const onSuccess = x => {
+      User.current = x.val()
+      User.updatedUserObject = R.clone(User.current)
+      m.redraw()
+    }
 
-    loader(id).fork(onError, onSuccess)
+    UserRef(id).once("value").then(onSuccess, onError)
   },
 
 

@@ -1,8 +1,8 @@
-var m = require("mithril")
+const m = require("mithril")
 
-var UserList = require("./components/users/view.js")
-var UserForm = require("./components/user/view.js")
-var Layout = require("./views/Layout")
+const UserList = require("./components/users/view.js")
+const UserForm = require("./components/user/view.js")
+const Layout = require("./templates/Layout")
 
 m.route(document.body, "/list", {
 
