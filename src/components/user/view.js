@@ -3,7 +3,7 @@ const User = require('./index.js');
 
 
 const UserForm = {
-  oninit: vnode => User.load(vnode.attrs.id),
+  oninit: vnode => {vnode.attrs.id? User.edit(vnode.attrs.id) : User.add()},
   view: function() {
         return User.current? m("form", {
                 onsubmit: function(e) {
@@ -15,13 +15,13 @@ const UserForm = {
             m("label.label", "First name"),
             m("input.input[type=text][placeholder=First name]", {
                 oninput: m.withAttr("value", value => User.updatedUserObject.firstName = value),
-                value: User.updatedUserObject.firstName? User.updatedUserObject.firstName : User.current.firstName
+                value: User.updatedUserObject.firstName? User.updatedUserObject.firstName : User.current.firstName ? User.current.firstName : ''
             }),
 
             m("label.label", "Last name"),
             m("input.input[placeholder=Last name]", {
                 oninput: m.withAttr("value", value => User.updatedUserObject.lastName = value),
-                value: User.updatedUserObject.lastName ? User.updatedUserObject.lastName : User.current.lastName
+                value: User.updatedUserObject.lastName ? User.updatedUserObject.lastName : User.current.lastName ? User.current.lastName : ''
             }),
 
             m("label.label", "profile pic"),

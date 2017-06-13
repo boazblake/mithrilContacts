@@ -1,16 +1,15 @@
 const m = require("mithril")
-const loader = require('./model.load.js')
 const UserRef = firebase.database().ref("users/");
 
 const Users = {
     list: [],
     loadList: _ => {
-      UserRef.on("value", snapshot =>
-        {Users.list = snapshot.val()
-            m.redraw()
-        console.log(Users.list)
-    }
-      )
+      const onError = e => console.log(e)
+      const onSuccess = s => {
+        Users.list = s.val()
+        m.redraw()
+      }
+      UserRef.once("value").then(onSuccess, onError)
     }
 }
 

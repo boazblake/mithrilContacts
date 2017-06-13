@@ -1,7 +1,8 @@
 const m = require("mithril")
 
 const UserList = require("./components/users/view.js")
-const UserForm = require("./components/user/view.js")
+const editContact = require("./components/user/view.js")
+const addContact = require("./components/user/view.js")
 const Layout = require("./templates/Layout")
 
 m.route(document.body, "/list", {
@@ -14,8 +15,14 @@ m.route(document.body, "/list", {
 
     "/edit/:id": {
       render: function(vnode) {
-        return m(Layout, m(UserForm, vnode.attrs))
+        return m(Layout, m(editContact, vnode.attrs))
       }
     },
+
+    "/new" : {
+      render: function() {
+        return m(Layout, m(addContact))
+      }
+    }
 
 })
