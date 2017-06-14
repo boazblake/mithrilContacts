@@ -1,5 +1,5 @@
 const EditFBUser = id => firebase.database().ref(`users/${id}`)
-const AddFbUser = _ => firebase.database().ref(`users/`)
+const getKey = _ => firebase.database().ref().child(`users/`).push().key
 const { log, UserMaker } = require('../../utils/index.js')
 
 export const editUser = data => {
@@ -12,8 +12,6 @@ export const editUser = data => {
 }
 
 export const addUser = data => {
-  console.log('adding a a user')
-  // use data to create a hash for id
-  // UserMaker(data)
-  return AddFbUser().push(data)
+  data.id = getKey()
+  return EditFBUser(data.id).set(data)
 }

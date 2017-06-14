@@ -1,5 +1,6 @@
 const m = require('mithril')
 const R = require('ramda')
+const AddFbUser = _ => firebase.database().ref(`users/`)
 const UserRef = id => firebase.database().ref(`users/${id}`)
 const { editUser, addUser} = require('./model.js')
 
@@ -12,9 +13,9 @@ const User = {
   errors:{},
 
   edit:id => {
-    const onError =x => console.log('E',x)
-    const onSuccess = x => {
-      User.data = x.val()
+    const onError =e => console.log('E',e)
+    const onSuccess = data => {
+      User.data = data.val()
       User.state.current = R.clone(User.data)
       User.state.updatedUserObject = R.clone(User.state.current)
       m.redraw()
@@ -29,9 +30,9 @@ const User = {
   },
 
   save: _ =>  {
-    const onError =x => console.log('E',x)
-    const onSuccess = x => {
-      console.log(x)
+    const onError =e => console.log('E',e)
+    const onSuccess = data => {
+      console.log('here we be',data)
       User.data = x.val()
       User.state.current = R.clone(User.data)
       User.state.updatedUserObject = R.clone(User.state.current)
@@ -39,18 +40,18 @@ const User = {
     }
 
     R.isEmpty(User.state.updatedUserObject)
-    ? addUser(User.state.current)
-    : editUser(User.state.updatedUserObject).then(onSuccess, onError)
-  m.redraw()
+      ? addUser(User.state.current).then(onSuccess, onError)
+      : editUser(User.state.updatedUserObject).then(onSuccess, onError)
+
   },
 
   reset: _ => {
     User.data = {},
     User.state = {
-      current:{ firstName: 'rome'
-              , lastName: 'ulos'
-              , profilePic: 'http://www.telegraph.co.uk/content/dam/men/2016/05/24/Untitled-1-large_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.jpg'
-              },
+      current: { firstName: 'rome'
+               , lastName: 'ulos'
+               , profilePic: 'http://www.telegraph.co.uk/content/dam/men/2016/05/24/Untitled-1-large_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.jpg'
+               },
       updatedUserObject: {},
     },
     User.errors = {}
