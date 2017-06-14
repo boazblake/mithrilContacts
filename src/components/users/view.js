@@ -2,9 +2,9 @@ const m = require('mithril')
 const Users = require('./index.js')
 
 const UserList = {
-  oninit:Users.loadList,
+  oninit:Users.load,
   view: _ =>{
-    return Users.list.length > 0 ? m(".user-list", Users.list.map( user =>
+    return Users.state.list? m(".user-list", Users.state.list.map( user =>
       m("user.list", [m("a.user-list-item"
               , {oncreate:m.route.link, href: `/edit/${user.id}`}
               , user.firstName + " " + user.lastName), m("img", {src:user.profilePic})])

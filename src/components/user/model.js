@@ -1,17 +1,19 @@
-const AddFbUser = id => firebase.database().ref(`users/${id}`)
-const EditFBUser = _ => firebase.database().ref(`users/`)
+const EditFBUser = id => firebase.database().ref(`users/${id}`)
+const AddFbUser = _ => firebase.database().ref(`users/`)
+const { log, UserMaker } = require('../../utils/index.js')
 
-
-const editUser = data => {
+export const editUser = data => {
   EditFBUser(data.id).update(
     { firstName:  data.firstName
     , lastName:   data.lastName
     , profilePic: data.profilePic
-    })
-    console.log('editing user success', data);
+  }).then(x => console.log('editing user success', data))
+
 }
 
-const addUser = data => {
-  AddFbUser(data)
-  console.log('adding user success', data);
+export const addUser = data => {
+  console.log('adding a a user')
+  // use data to create a hash for id
+  // UserMaker(data)
+  return AddFbUser().push(data)
 }
