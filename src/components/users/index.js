@@ -1,23 +1,28 @@
 const m = require("mithril")
 const R = require('ramda')
+const  {getUsers}  = require('./model.load.js')
 const UserRef = firebase.database().ref("users/");
+const {log} = require('../../utils/index.js')
+const Task = require('data.task')
 
 const Users = {
   state : {},
   data : {
-    list:[]
+    list:R.unapply(R.identity)
   },
   errors:{},
 
   load: _ => {
-    const onError = e => console.log(e)
+    const onError = e =>
+      log('e')(e)
     const onSuccess = s => {
-      Users.data.list = s.val()
-      Users.state = R.clone(Users.data)
-      console.log(Users.state)
+      Users.data.list = s
+      Users.state.list = R.clone(Users.data.list)
       m.redraw()
+      // console.log('index.js',Users.state.list.map(u=> console.log(u[0], u[1])))
     }
-    UserRef.once("value").then(onSuccess, onError)
+
+    getUsers.fork(onError, onSuccess)
   },
 }
 
