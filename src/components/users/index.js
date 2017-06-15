@@ -1,29 +1,32 @@
 const m = require("mithril")
-const R = require('ramda')
-const  {getUsers}  = require('./model.load.js')
-const UserRef = firebase.database().ref("users/");
-const {log} = require('../../utils/index.js')
-const Task = require('data.task')
+const R = require("ramda")
+const { getUsers } = require("./model.load.js")
+const {log} = require("../../utils/index.js")
+
+const unwrap = obj => {
+  R.map(obj)
+}
+
 
 const Users = {
-  state : {},
-  data : {
-    list:R.unapply(R.identity)
+  state: {},
+  data: {
+    list: R.unapply(R.identity)
   },
-  errors:{},
+  errors: {},
 
-  load: _ => {
+  load: () => {
     const onError = e =>
-      log('e')(e)
+      log("e")(e)
     const onSuccess = s => {
       Users.data.list = s
       Users.state.list = R.clone(Users.data.list)
       m.redraw()
-      // console.log('index.js',Users.state.list.map(u=> console.log(u[0], u[1])))
+      log("index.js")( unwrap(Users.state.list))
     }
 
     getUsers.fork(onError, onSuccess)
-  },
+  }
 }
 
 module.exports = Users
