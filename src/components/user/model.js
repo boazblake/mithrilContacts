@@ -1,9 +1,9 @@
+/* global firebase */
+/* eslint no-undef: "error" */
 const EditFBUser = id => firebase.database().ref(`users/${id}`)
-const getKey = _ => firebase.database().ref().child(`users/`).push().key
-const { log, UserMaker } = require('../../utils/index.js')
+const getKey = () => firebase.database().ref().child("users/").push().key
 
 export const editUser = data => {
-  log("editing User")
   return EditFBUser(data.id).update(
     { firstName:  data.firstName
       , lastName:   data.lastName
@@ -13,8 +13,14 @@ export const editUser = data => {
 }
 
 export const addUser = (data, pic) => {
-  console.log("adding userUser", pic)
   data.id = getKey()
   data.profilePic = pic
+  data.firstName === undefined
+    ? data.firstName = "__"
+    : data.firstName = data.firstName
+  data.lastName === undefined
+    ? data.lastName = "__"
+    : data.lastName = data.lastName
+
   return EditFBUser(data.id).set(data)
 }

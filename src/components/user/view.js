@@ -1,5 +1,5 @@
-const m = require('mithril')
-const User = require('./index.js');
+const m = require("mithril")
+const User = require("./index.js")
 
 
 const UserForm = {
