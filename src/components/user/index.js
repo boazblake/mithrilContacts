@@ -26,10 +26,10 @@ const User = {
 
   add: () => {
     console.log("adding a contact")
-    console.log("current",User.state.current)
-    console.log("updated",User.state.updatedUserObject)
     User.reset()
     m.redraw()
+    console.log("current",User.state.current)
+    console.log("updated",User.state.updatedUserObject)
   },
 
   save: () => {

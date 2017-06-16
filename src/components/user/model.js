@@ -13,8 +13,16 @@ export const editUser = data => {
 }
 
 export const addUser = (data, pic) => {
-  console.log("adding userUser", pic)
   data.id = getKey()
   data.profilePic = pic
+  data.firstName === undefined
+    ? data.firstName = "__"
+    : data.firstName = data.firstName
+  data.lastName === undefined
+    ? data.lastName = "__"
+    : data.lastName = data.lastName
+
+console.log("adding userUser", data)
+
   return EditFBUser(data.id).set(data)
 }
