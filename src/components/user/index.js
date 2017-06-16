@@ -42,7 +42,6 @@ const User = {
       : editUser(User.state.updatedUserObject).then(onSuccess, onError)
 
   },
-
   reset:() => {
     User.data = {},
     User.state = {
@@ -56,6 +55,7 @@ const User = {
     },
     User.errors = {}
   },
+
 }
 
 module.exports = User

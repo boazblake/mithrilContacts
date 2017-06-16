@@ -23,6 +23,7 @@
     "mithril": "^1.1.1",
     "normalize.css": "^7.0.0",
     "ramda": "^0.24.1",
+    "toaster-js": "^1.1.0",
     "webpack": "^2.6.1"
   }
 }
