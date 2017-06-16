@@ -1,21 +1,28 @@
-var m = require("mithril")
+const m = require('mithril')
 
-var UserList = require("./views/UserList")
-var UserForm = require("./views/UserForm")
-var Layout = require("./views/Layout")
+const UserList = require('./components/users/view.js')
+const editContact = require('./components/user/view.js')
+const addContact = require('./components/user/view.js')
+const Layout = require('./templates/Layout')
 
-m.route(document.body, "/list", {
+m.route(document.body, '/list', {
 
-    "/list": {
-        render: function() {
-            return m(Layout, m(UserList))
-        }
-    },
+  '/list': {
+    render: function () {
+      return m(Layout, m(UserList))
+    }
+  },
 
-    "/edit/:id": {
-      render: function(vnode) {
-        return m(Layout, m(UserForm, vnode.attrs))
-      }
-    },
+  '/edit/:id': {
+    render: function (vnode) {
+      return m(Layout, m(editContact, vnode.attrs))
+    }
+  },
+
+  '/new': {
+    render: function () {
+      return m(Layout, m(addContact))
+    }
+  }
 
 })
