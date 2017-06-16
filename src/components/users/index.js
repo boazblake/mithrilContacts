@@ -1,31 +1,37 @@
 const m = require("mithril")
 const R = require("ramda")
-const { getUsers } = require("./model.load.js")
+const { getUsers } = require("./model.js")
 const {log} = require("../../utils/index.js")
-
-const unwrap = obj => {
-  R.map(obj)
-}
-
 
 const Users = {
   state: {},
   data: {
-    list: R.unapply(R.identity)
+    list: []
   },
   errors: {},
 
   load: () => {
     const onError = e =>
       log("e")(e)
-    const onSuccess = s => {
-      Users.data.list = s
+    const onSuccess = dto => {
+      const value = [[{}]]
+      const data = dto.getOrElse(value)
+      if (data === value) {
+        return console.error("no users")
+      }
+      Users.data.list = data
+      R.map(log("DTO>>>")(dto))
+      R.map(log("data>>>")(data))
       Users.state.list = R.clone(Users.data.list)
+      log("Users.state.list")( Users.state.list)
       m.redraw()
-      log("index.js")( unwrap(Users.state.list))
     }
 
     getUsers.fork(onError, onSuccess)
+  },
+
+  reset: () =>{
+
   }
 }
 
