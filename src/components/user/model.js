@@ -1,26 +1,35 @@
 /* global firebase */
 /* eslint no-undef: "error" */
-const EditFBUser = id => firebase.database().ref(`users/${id}`)
-const getKey = () => firebase.database().ref().child("users/").push().key
+const getKey = () => firebase.database().ref().child("api/v1/users/").push().key
+const UserRef = id => firebase.database().ref(`api/v1/users/${id}`)
+const removeUser = id => UserRef.child(id)
+const Task = require("data.task")
 
-export const editUser = data => {
-  return EditFBUser(data.id).update(
-    { firstName:  data.firstName
-      , lastName:   data.lastName
-      , profilePic: data.profilePic
-    })
 
+export const getUserTask = id =>
+  new Task((rej, res) => UserRef(id).once("value").then(res, rej))
+
+export const editUserTask = data => {
+  return new Task( (rej, res) =>
+    UserRef(data.id).update(
+      { firstName:  data.firstName
+        , lastName:   data.lastName
+        , profilePic: data.profilePic
+      }).then(res, rej))
 }
 
-export const addUser = (data, pic) => {
+export const addUserTask = data => pic => {
   data.id = getKey()
   data.profilePic = pic
-  data.firstName === undefined
-    ? data.firstName = "__"
-    : data.firstName = data.firstName
-  data.lastName === undefined
-    ? data.lastName = "__"
-    : data.lastName = data.lastName
 
-  return EditFBUser(data.id).set(data)
+  return new Task((rej, res) => {
+    UserRef(data.id).set(data)
+      .then(res, rej) })
+}
+
+
+export const delUserTask = id => {
+  return new Task((rej, res)=> {
+    removeUser(id).remove().then(res,rej)
+  })
 }

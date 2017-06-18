@@ -1,6 +1,6 @@
 const m = require("mithril")
 const R = require("ramda")
-const { getUsers } = require("./model.js")
+const { getUsersTask } = require("./model.js")
 
 const Users = {
   state: {},
@@ -26,10 +26,10 @@ const Users = {
       m.redraw()
     }
 
-    getUsers.fork(onError, onSuccess)
+    getUsersTask.fork(onError, onSuccess)
   },
 
-  reset: () =>{
+  reset: () =>{}
 
   }
 }
