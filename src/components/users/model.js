@@ -1,6 +1,6 @@
 /* global firebase */
 /* eslint no-undef: "error" */
-const UserRef = firebase.database().ref("users/")
+const UserRef = firebase.database().ref("api/v1/users/")
 const Task = require("data.task")
 const Maybe = require("folktale/data/maybe")
 
@@ -17,7 +17,6 @@ const parseFirebaseDto = dto =>{
 }
 
 const makeArray = obj => {
-
   const toArray = dto => {
     let res = Object.keys(dto)
     return res.map(k => {
@@ -31,7 +30,7 @@ const makeArray = obj => {
 }
 
 
-const getUsers =
+export const getUsersTask =
   new Task((rej, res) => {
     UserRef.once("value")
       .then(fbDto => toMaybe(fbDto))

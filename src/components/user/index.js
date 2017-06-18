@@ -1,9 +1,7 @@
-/* global firebase */
-/* eslint no-undef: "error" */
 const m = require("mithril")
 const R = require("ramda")
-const UserRef = id => firebase.database().ref(`users/${id}`)
-const { editUser, addUser} = require("./model.js")
+const { editUserTask, addUserTask, getUserTask, delUserTask} = require("./model.js")
+const { log } = require("../../utils/index.js")
 
 const User = {
   state: {
@@ -22,7 +20,7 @@ const User = {
       m.redraw()
     }
 
-    UserRef(id).once("value").then(onSuccess, onError)
+    getUserTask(id).fork(onError, onSuccess)
   },
 
   add: () => {
@@ -38,10 +36,18 @@ const User = {
     }
 
     User.state.current.id === ""
-      ? addUser(User.state.updatedUserObject, User.state.current.profilePic).then(onSuccess, onError)
-      : editUser(User.state.updatedUserObject).then(onSuccess, onError)
+      ? addUserTask(User.state.updatedUserObject)(User.state.current.profilePic).fork(onError, onSuccess)
+      : editUserTask(User.state.updatedUserObject).fork(onError, onSuccess)
 
   },
+
+  deleteUser:(id) => {
+    log("id")(id)
+    id
+      ? delUserTask(id).fork(e => console.error("e", e), s => log("s")(s))
+      : console.log("USER IS NOT IN Db ") //TOAST THIS
+  },
+
   reset:() => {
     User.data = {},
     User.state = {
